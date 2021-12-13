@@ -17,33 +17,43 @@ class Dino:
     def __init__(self, x, y):
         self.__x = x
         self.__y = y
+
         self.__dino_image = pygame.image.load(Dino.__running_sprite_paths[0])
+
         self.__has_bazooka = False
-        self.__running_counter = 0
+        self.__stooping = False
+        self.__jumping = False
+
         self.__running_counter = 0
         self.__jump_counter = 0
 
-    def run(self):
-        if self.__has_bazooka:
-            if self.__running_counter >= len(Dino.__bazooka_sprite_paths):
-                self.__running_counter = 0
-            self.__dino_image = pygame.image.load(Dino.__bazooka_sprite_paths[self.__running_counter])
+    def move(self):
+        if not self.__jumping:
+            if self.__has_bazooka:  # set current dino image to next bazooka dino
+                if self.__running_counter >= len(Dino.__bazooka_sprite_paths):
+                    self.__running_counter = 0
+                self.__dino_image = pygame.image.load(Dino.__bazooka_sprite_paths[self.__running_counter])
+            elif self.__stooping:  # set current dino image to next stooping dino
+                if self.__running_counter >= len(Dino.__stooping_sprite_paths):
+                    self.__running_counter = 0
+                self.__dino_image = pygame.image.load(Dino.__stooping_sprite_paths[self.__running_counter])
+                pass
+            else:  # set current dino image to next normal dino
+                if self.__running_counter >= len(Dino.__running_sprite_paths):
+                    self.__running_counter = 0
+                self.__dino_image = pygame.image.load(Dino.__running_sprite_paths[self.__running_counter])
+
+            self.__running_counter += 1
         else:
-            if self.__running_counter >= len(Dino.__running_sprite_paths):
-                self.__running_counter = 0
-            self.__dino_image = pygame.image.load(Dino.__running_sprite_paths[self.__running_counter])
+            pass
 
-        self.__running_counter += 1
-
-    def run_stooping(self):
-        if self.__running_counter >= len(Dino.__stooping_sprite_paths):
-            self.__running_counter = 0
-        self.__dino_image = pygame.image.load(Dino.__stooping_sprite_paths[self.__running_counter])
-
-        self.__running_counter += 1
-
-    def jump(self):
-        pass
-
-    def getImage(self):
         return self.__dino_image
+
+    def set_stooping(self, stooping):
+        self.__stooping = stooping
+
+    def activate_bazooka(self):
+        self.__has_bazooka = True
+
+    def activate_jumping(self):
+        self.__jumping = True
