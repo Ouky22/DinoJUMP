@@ -8,11 +8,11 @@ class Dino:
     __running_sprite_paths = [f for f in glob.glob(os.path.join("sprites", "dino", "dino_running_normal", "*.png"))]
     __stooping_sprite_paths = [f for f in glob.glob(os.path.join("sprites", "dino", "dino_running_stooping", "*.png"))]
     __bazooka_sprite_paths = [f for f in glob.glob(os.path.join("sprites", "dino", "dino_running_bazooka", "*.png"))]
-    __jumping_sprite_path = os.path.join("sprites", "dino", "dino_running_normal", "trex04.png")
+    __jumping_sprite_path = os.path.join("sprites", "dino", "dino_running_normal", "trex01.png")
     __game_over_sprite_path = os.path.join("sprites", "dino", "trex04.png")
     __game_over_bazooka_sprite_path = os.path.join("sprites", "dino", "trexBazooka04.png")
 
-    __jump_height = 10
+    __jump_height = 8
 
     def __init__(self, x, y):
         self.__x = x
@@ -25,7 +25,7 @@ class Dino:
         self.__jumping = False
 
         self.__running_counter = 0
-        self.__jump_counter = 0
+        self.__jump_counter = Dino.__jump_height * -1
 
     def move(self):
         if not self.__jumping:
@@ -45,7 +45,16 @@ class Dino:
 
             self.__running_counter += 1
         else:
-            pass
+            if self.__jump_counter <= Dino.__jump_height:
+                if self.__jump_counter < 0:
+                    self.__y -= self.__jump_counter ** 2
+                else:
+                    self.__y += self.__jump_counter ** 2
+
+                self.__jump_counter += 1
+            else:
+                self.__jumping = False
+                self.__jump_counter = Dino.__jump_height * -1
 
         return self.__dino_image
 
@@ -57,3 +66,10 @@ class Dino:
 
     def activate_jumping(self):
         self.__jumping = True
+        self.__dino_image = pygame.image.load(Dino.__jumping_sprite_path)
+
+    def get_x(self):
+        return self.__x
+
+    def get_y(self):
+        return self.__y
