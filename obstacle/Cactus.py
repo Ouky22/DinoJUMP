@@ -8,10 +8,10 @@ from obstacle.LeftMovingObject import LeftMovingObject
 
 
 class Cactus(LeftMovingObject):
-    __cactus_list = [f for f in glob.glob(os.path.join("sprites", "obstacle", "cactus", "*.png"))]
+    __cactus_image_paths = [f for f in glob.glob(os.path.join("sprites", "obstacle", "cactus", "*.png"))]
 
     def __init__(self, x, y):
-        image = pygame.image.load(Cactus.__cactus_list[random.randint(0, len(Cactus.__cactus_list) - 1)])
+        image = pygame.image.load(Cactus.__cactus_image_paths[random.randint(0, len(Cactus.__cactus_image_paths) - 1)])
         super().__init__(x, y, image)
 
     def moveLeft(self):
