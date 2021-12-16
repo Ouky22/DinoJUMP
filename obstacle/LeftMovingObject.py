@@ -16,7 +16,7 @@ class LeftMovingObject(ABC):
         pass
 
     @abstractmethod
-    def get_collision_box(self):
+    def get_collision_boxes(self):
         pass
 
     def get_image(self):

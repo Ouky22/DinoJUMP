@@ -17,5 +17,5 @@ class Cactus(LeftMovingObject):
     def moveLeft(self):
         self._x -= self._speed
 
-    def get_collision_box(self):
+    def get_collision_boxes(self):
         return [(self._x, self._y, self._image.get_width(), self._image.get_height())]

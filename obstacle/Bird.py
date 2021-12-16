@@ -32,7 +32,7 @@ class Bird(LeftMovingObject):
 
         self._x -= self._speed
 
-    def get_collision_box(self):
+    def get_collision_boxes(self):
         head_collision_box = (self._x + self._image.get_width() * 0.05, self._y + self._image.get_height() * 0.2,
                               self._image.get_width() * 0.3, self._image.get_height() * 0.3)
         if self.__current_image_index == 0:

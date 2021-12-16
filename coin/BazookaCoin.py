@@ -14,7 +14,7 @@ class BazookaCoin(LeftMovingObject):
         super().__init__(x, y, image)
 
     def moveLeft(self):
-        pass
+        self._x -= self._speed
 
-    def get_collision_box(self):
-        pass
+    def get_collision_boxes(self):
+        return [(self._x, self._y, self._image.get_width(), self._image.get_height())]
