@@ -12,11 +12,10 @@ class Cactus(LeftMovingObject):
 
     def __init__(self, x, y):
         image = pygame.image.load(Cactus.__cactus_list[random.randint(0, len(Cactus.__cactus_list) - 1)])
-
         super().__init__(x, y, image)
 
     def moveLeft(self):
         self._x -= self._speed
 
     def get_collision_box(self):
-        pass
+        return self._x, self._y, self._image.get_width(), self._image.get_height()
