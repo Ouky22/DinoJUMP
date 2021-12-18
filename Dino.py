@@ -13,6 +13,9 @@ class Dino:
     __game_over_bazooka_sprite_path = os.path.join("sprites", "dino", "trexBazooka04.png")
 
     __jump_height = 8
+    # how often move has to be called after the current image
+    # gets changed for creating movement effect
+    __running_speed = 4
 
     def __init__(self, x, y):
         self.__x = x
@@ -25,25 +28,32 @@ class Dino:
         self.__jumping = False
 
         self.__running_counter = 0
+        self.__current_image_index = 0
         self.__jump_counter = Dino.__jump_height * -1
 
     def move(self):
         if not self.__jumping:
+            self.__running_counter += 1
+
+            # do not perform movement if __running_counter is not a multiple of __running_speed
+            if self.__running_counter % Dino.__running_speed != 0:
+                return
+
+            self.__current_image_index += 1
+
             if self.__has_bazooka:  # set current dino image to next bazooka dino
-                if self.__running_counter >= len(Dino.__bazooka_sprite_paths):
-                    self.__running_counter = 0
-                self.__current_image = pygame.image.load(Dino.__bazooka_sprite_paths[self.__running_counter])
+                if self.__current_image_index >= len(Dino.__bazooka_sprite_paths):
+                    self.__current_image_index = 0
+                self.__current_image = pygame.image.load(Dino.__bazooka_sprite_paths[self.__current_image_index])
             elif self.__stooping:  # set current dino image to next stooping dino
-                if self.__running_counter >= len(Dino.__stooping_sprite_paths):
-                    self.__running_counter = 0
-                self.__current_image = pygame.image.load(Dino.__stooping_sprite_paths[self.__running_counter])
+                if self.__current_image_index >= len(Dino.__stooping_sprite_paths):
+                    self.__current_image_index = 0
+                self.__current_image = pygame.image.load(Dino.__stooping_sprite_paths[self.__current_image_index])
                 pass
             else:  # set current dino image to next normal dino
-                if self.__running_counter >= len(Dino.__running_sprite_paths):
-                    self.__running_counter = 0
-                self.__current_image = pygame.image.load(Dino.__running_sprite_paths[self.__running_counter])
-
-            self.__running_counter += 1
+                if self.__current_image_index >= len(Dino.__running_sprite_paths):
+                    self.__current_image_index = 0
+                self.__current_image = pygame.image.load(Dino.__running_sprite_paths[self.__current_image_index])
         else:
             if self.__jump_counter <= Dino.__jump_height:
                 if self.__jump_counter < 0:
