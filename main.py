@@ -22,6 +22,8 @@ explosion = Explosion(800, 300)
 pygame.init()
 gameDisplay = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
 
+dino.activate_bazooka()
+
 while not quit:
     gameDisplay.fill(WHITE)
     gameDisplay.blit(dino.get_image(), (dino.get_x(), dino.get_y()))
