@@ -24,10 +24,9 @@ gameDisplay = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
 
 while not quit:
     gameDisplay.fill(WHITE)
-    if not explosion.isExplosionOver():
-        gameDisplay.blit(explosion.get_image(), (explosion.get_x(), explosion.get_y()))
-        explosion.moveLeft()
-    for box in explosion.get_collision_boxes():
+    gameDisplay.blit(dino.get_image(), (dino.get_x(), dino.get_y()))
+    dino.move()
+    for box in dino.get_collision_boxes():
         pygame.draw.rect(gameDisplay, (255, 0, 0), box, 2)
 
     pygame.display.update()
