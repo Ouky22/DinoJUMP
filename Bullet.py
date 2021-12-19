@@ -1,5 +1,7 @@
 import os
 
+import pygame
+
 
 class Bullet:
     __bullet_image_path = os.path.join("sprites", "bazooka", "bazookaBullet.py")
@@ -8,15 +10,16 @@ class Bullet:
     def __init__(self, x, y):
         self.__x = x
         self.__y = y
+        self.__image = pygame.image.load(Bullet.__bullet_image_path)
 
     def move_right(self):
-        pass
+        self.__x += self.__speed
 
     def get_image(self):
-        pass
+        return self.__image
 
     def get_collision_boxes(self):
-        pass
+        return [(self.__x, self.__y, self.__image.get_width(), self.__image.get_height())]
 
     def get_x(self):
         return self.__x
