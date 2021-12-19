@@ -3,6 +3,8 @@ import os.path
 import pygame.image
 import glob
 
+from bazooka.Bullet import Bullet
+
 
 class Dino:
     __running_sprite_paths = [f for f in glob.glob(os.path.join("sprites", "dino", "dino_running_normal", "*.png"))]
@@ -31,6 +33,9 @@ class Dino:
         self.__current_image_index = 0
         self.__jump_counter = Dino.__jump_height * -1
 
+        self.__bullets = []
+        self.__bullets_counter = 0
+
     def move(self):
         if not self.__jumping:
             self.__running_counter += 1
@@ -49,7 +54,6 @@ class Dino:
                 if self.__current_image_index >= len(Dino.__stooping_sprite_paths):
                     self.__current_image_index = 0
                 self.__current_image = pygame.image.load(Dino.__stooping_sprite_paths[self.__current_image_index])
-                pass
             else:  # set current dino image to next normal dino
                 if self.__current_image_index >= len(Dino.__running_sprite_paths):
                     self.__current_image_index = 0
@@ -66,15 +70,21 @@ class Dino:
                 self.__jumping = False
                 self.__jump_counter = Dino.__jump_height * -1
 
+        # if there are bullets move them right
+        for bullet in self.__bullets:
+            bullet.move_right()
+
     def set_stooping(self, stooping):
         self.__stooping = stooping
 
     def activate_bazooka(self):
         self.__has_bazooka = True
+        self.__bullets_counter = 3
 
     def activate_jumping(self):
-        self.__jumping = True
-        self.__current_image = pygame.image.load(Dino.__jumping_sprite_path)
+        if not self.__has_bazooka:
+            self.__jumping = True
+            self.__current_image = pygame.image.load(Dino.__jumping_sprite_path)
 
     def get_collision_boxes(self):
         if self.__stooping:
@@ -96,6 +106,22 @@ class Dino:
                     (self.__x + self.__current_image.get_width() * 0.25, self.__y + self.get_image().get_height() * 0.7,
                      self.__current_image.get_width() * 0.3, self.__current_image.get_height() * 0.25)]
 
+    def get_bullets_collision_boxes(self):
+        collision_boxes = []
+        for bullet in self.__bullets:
+            collision_boxes.append((bullet.get_x(), bullet.get_y(), bullet.get_image().get_width(),
+                                    bullet.get_image().get_height()))
+        return collision_boxes
+
+    def shoot_bullet(self):
+        if self.__bullets_counter > 0 and self.__has_bazooka:
+            self.__bullets.append(Bullet(self.__x + self.__current_image.get_width(),
+                                         self.__y + self.__current_image.get_height() * 0.37))
+            self.__bullets_counter -= 1
+
+        if self.__bullets_counter <= 0:
+            self.__has_bazooka = False
+
     def get_x(self):
         return self.__x
 
@@ -104,3 +130,6 @@ class Dino:
 
     def get_image(self):
         return self.__current_image
+
+    def get_bullets(self):
+        return self.__bullets

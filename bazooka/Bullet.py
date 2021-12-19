@@ -4,8 +4,8 @@ import pygame
 
 
 class Bullet:
-    __bullet_image_path = os.path.join("sprites", "bazooka", "bazookaBullet.py")
-    __speed = 10
+    __bullet_image_path = os.path.join("sprites", "bazooka", "bazookaBullet.png")
+    __speed = 12
 
     def __init__(self, x, y):
         self.__x = x
