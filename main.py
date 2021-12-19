@@ -6,45 +6,44 @@ from obstacle.Bird import Bird
 from obstacle.Cactus import Cactus
 from obstacle.Explosion import Explosion
 
+pygame.init()
+
+# display
+pygame.display.set_caption("Dino Jump")
 DISPLAY_WIDTH = 1000
 DISPLAY_HEIGHT = 500
+gameDisplay = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
 WHITE = (255, 255, 255)
+
+# time
 FPS = 60
 clock = pygame.time.Clock()
 
-quit = False
+# game constants
+ground_y = DISPLAY_HEIGHT - 10
+
+# game objects
 dino = Dino(30, 30)
 cactus = Cactus(700, 400)
 bird = Bird(1100, 400)
 bazookaCoin = BazookaCoin(1100, 300)
 explosion = Explosion(800, 300)
 
-pygame.init()
-gameDisplay = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
+quit_game = False
 
-counter = 0
 
-dino.activate_bazooka()
-dino.shoot_bullet()
+def perform_dino_actions(pressed_keys):
+    pass
 
-while not quit:
+
+while not quit_game:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            quit_game = True
+
     gameDisplay.fill(WHITE)
-    gameDisplay.blit(dino.get_image(), (dino.get_x(), dino.get_y()))
-    for bullet in dino.get_bullets():
-        gameDisplay.blit(bullet.get_image(), (bullet.get_x(), bullet.get_y()))
-
-    dino.move()
-
-    counter += 1
-    if counter % 100 == 0:
-        dino.shoot_bullet()
-        counter = 0
-
-    for box in dino.get_collision_boxes():
-        pygame.draw.rect(gameDisplay, (255, 0, 0), box, 2)
-
-    for box in dino.get_bullets_collision_boxes():
-        pygame.draw.rect(gameDisplay, (255, 0, 0), box, 2)
 
     pygame.display.update()
     clock.tick(FPS)
+
+pygame.quit()
