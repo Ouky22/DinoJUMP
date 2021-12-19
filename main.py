@@ -1,12 +1,12 @@
 import pygame as pygame
 
 from Dino import Dino
-from coin.BazookaCoin import BazookaCoin
+from BazookaCoin import BazookaCoin
 from obstacle.Bird import Bird
 from obstacle.Cactus import Cactus
 from obstacle.Explosion import Explosion
 
-DISPLAY_WIDTH = 1200
+DISPLAY_WIDTH = 1000
 DISPLAY_HEIGHT = 500
 WHITE = (255, 255, 255)
 FPS = 60
