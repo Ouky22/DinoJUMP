@@ -48,6 +48,9 @@ def handle_pressed_keys(pressed_keys):
 def draw_moving_objects():
     # draw dino
     gameDisplay.blit(dino.get_image(), (dino.get_x(), dino.get_y()))
+    # draw bullets
+    for bullet in dino.get_bullets():
+        gameDisplay.blit(bullet.get_image(), (bullet.get_x(), bullet.get_y()))
     # draw cacti
     for cactus in cactus_list:
         gameDisplay.blit(cactus.get_image(), (cactus.get_x(), cactus.get_y()))
