@@ -62,12 +62,30 @@ def draw_moving_objects():
         gameDisplay.blit(explosion.get_image(), (explosion.get_x(), explosion.get_y()))
 
 
+def perform_object_movements():
+    dino.move()
+
+    for cactus in cactus_list:
+        cactus.moveLeft()
+
+    if bird is not None:
+        bird.moveLeft()
+
+    if bazookaCoin is not None:
+        bazookaCoin.moveLeft()
+
+    if explosion is not None:
+        explosion.moveLeft()
+
+
 while not quit_game:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             quit_game = True
 
-    perform_dino_actions(pygame.key.get_pressed())
+    handle_pressed_keys(pygame.key.get_pressed())
+
+    perform_object_movements()
 
     gameDisplay.fill(WHITE)
     draw_moving_objects()
