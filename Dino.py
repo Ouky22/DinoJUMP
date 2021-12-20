@@ -15,9 +15,13 @@ class Dino:
     __game_over_bazooka_sprite_path = os.path.join("sprites", "dino", "trexBazooka04.png")
 
     __jump_height = 8
-    # how often move has to be called after the current image
+
+    # how often move() has to be called after the current image
     # gets changed for creating movement effect
     __running_speed = 5
+
+    # how often move() has to be called after the next bullet can be shot
+    __bullet_loading_speed = 10
 
     def __init__(self, x, y):
         self.__x = x
@@ -34,7 +38,11 @@ class Dino:
         self.__jump_counter = Dino.__jump_height * -1
 
         self.__bullets = []
-        self.__bullets_counter = 0
+        # how many bullets the dino has after collecting bazookaCoin
+        self.__bullet_amount = 0
+        # for bullet loading (bullets shouldn't be shot at the same time)
+        self.__bullet_loading_counter = 0
+        self.__bullet_loaded = False
 
     def move(self):
         if not self.__jumping:
@@ -70,7 +78,13 @@ class Dino:
                 self.__jumping = False
                 self.__jump_counter = Dino.__jump_height * -1
 
-        # if there are bullets move them right
+        # for bullet loading
+        if not self.__bullet_loaded:
+            self.__bullet_loading_counter += 1
+        if self.__bullet_loading_counter % Dino.__bullet_loading_speed == 0:
+            self.__bullet_loaded = True
+
+        # move bullets right
         for bullet in self.__bullets:
             bullet.move_right()
 
@@ -79,7 +93,8 @@ class Dino:
 
     def activate_bazooka(self):
         self.__has_bazooka = True
-        self.__bullets_counter = 3
+        self.__bullet_amount = 3
+        self.__bullet_loaded = True
 
     def activate_jumping(self):
         if not self.__has_bazooka:
@@ -114,12 +129,13 @@ class Dino:
         return collision_boxes
 
     def shoot_bullet(self):
-        if self.__bullets_counter > 0 and self.__has_bazooka:
+        if self.__has_bazooka and self.__bullet_amount > 0 and self.__bullet_loaded:
             self.__bullets.append(Bullet(self.__x + self.__current_image.get_width(),
                                          self.__y + self.__current_image.get_height() * 0.37))
-            self.__bullets_counter -= 1
+            self.__bullet_amount -= 1
+            self.__bullet_loaded = False
 
-        if self.__bullets_counter <= 0:
+        if self.__bullet_amount <= 0:
             self.__has_bazooka = False
 
     def get_x(self):
