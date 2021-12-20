@@ -45,13 +45,12 @@ class Dino:
         self.__bullet_loaded = False
 
     def move(self):
+        self.__running_counter += 1
+        # do not perform movement if __running_counter is not a multiple of __running_speed
+        if self.__running_counter % Dino.__running_speed != 0:
+            return
+
         if not self.__jumping:
-            self.__running_counter += 1
-
-            # do not perform movement if __running_counter is not a multiple of __running_speed
-            if self.__running_counter % Dino.__running_speed != 0:
-                return
-
             self.__current_image_index += 1
 
             if self.__has_bazooka:  # set current dino image to next bazooka dino
