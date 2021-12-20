@@ -20,20 +20,46 @@ FPS = 60
 clock = pygame.time.Clock()
 
 # game constants
-ground_y = DISPLAY_HEIGHT - 10
+ground_y = DISPLAY_HEIGHT - 100
 
 # game objects
-dino = Dino(30, 30)
-cactus = Cactus(700, 400)
-bird = Bird(1100, 400)
-bazookaCoin = BazookaCoin(1100, 300)
-explosion = Explosion(800, 300)
+dino = Dino(10, ground_y)
+cactus_list = []
+bird: Bird = None
+bazookaCoin: BazookaCoin = None
+explosion: Explosion = None
 
 quit_game = False
 
 
-def perform_dino_actions(pressed_keys):
-    pass
+def handle_pressed_keys(pressed_keys):
+    if pressed_keys[pygame.K_SPACE] or pressed_keys[pygame.K_UP]:
+        dino.activate_jumping()
+
+    if pressed_keys[pygame.K_DOWN]:
+        dino.set_stooping(True)
+    else:
+        dino.set_stooping(False)
+
+    if pressed_keys[pygame.K_s]:
+        dino.shoot_bullet()
+
+
+def draw_moving_objects():
+    # draw dino
+    gameDisplay.blit(dino.get_image(), (dino.get_x(), dino.get_y()))
+    # draw cacti
+    for cactus in cactus_list:
+        gameDisplay.blit(cactus.get_image(), (cactus.get_x(), cactus.get_y()))
+    # draw Bird
+    if bird is not None:
+        gameDisplay.blit(bird.get_image(), (bird.get_x(), bird.get_y()))
+    # draw bazookaCoin:
+    if bazookaCoin is not None:
+        gameDisplay.blit(bazookaCoin.get_image(), (bazookaCoin.get_x(), bazookaCoin.get_y()))
+    # draw explosion
+    if explosion is not None:
+        gameDisplay.blit(explosion.get_image(), (explosion.get_x(), explosion.get_y()))
 
 
 while not quit_game:
@@ -41,8 +67,10 @@ while not quit_game:
         if event.type == pygame.QUIT:
             quit_game = True
 
-    gameDisplay.fill(WHITE)
+    perform_dino_actions(pygame.key.get_pressed())
 
+    gameDisplay.fill(WHITE)
+    draw_moving_objects()
     pygame.display.update()
     clock.tick(FPS)
 
