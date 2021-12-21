@@ -1,3 +1,5 @@
+import random
+
 import pygame as pygame
 
 from Dino import Dino
@@ -24,10 +26,10 @@ ground_y = DISPLAY_HEIGHT - 100
 
 # game objects
 dino = Dino(10, ground_y)
-cactus_list = []
-bird: Bird = None
-bazookaCoin: BazookaCoin = None
-explosion: Explosion = None
+cacti = []
+birds = []
+bazookaCoins = []
+explosions = []
 
 quit_game = False
 
@@ -54,32 +56,37 @@ def draw_moving_objects():
     for bullet in dino.get_bullets():
         gameDisplay.blit(bullet.get_image(), (bullet.get_x(), bullet.get_y()))
     # draw cacti
-    for cactus in cactus_list:
+    for cactus in cacti:
         gameDisplay.blit(cactus.get_image(), (cactus.get_x(), cactus.get_y()))
     # draw Bird
-    if bird is not None:
+    for bird in birds:
         gameDisplay.blit(bird.get_image(), (bird.get_x(), bird.get_y()))
     # draw bazookaCoin:
-    if bazookaCoin is not None:
+    for bazookaCoin in bazookaCoins:
         gameDisplay.blit(bazookaCoin.get_image(), (bazookaCoin.get_x(), bazookaCoin.get_y()))
     # draw explosion
-    if explosion is not None:
+    for explosion in explosions:
         gameDisplay.blit(explosion.get_image(), (explosion.get_x(), explosion.get_y()))
+
+
+def create_obstacles():
+    rnd_number = random.randint(0, 100)
+    # todo create obstacles
 
 
 def perform_object_movements():
     dino.move()
 
-    for cactus in cactus_list:
+    for cactus in cacti:
         cactus.moveLeft()
 
-    if bird is not None:
+    for bird in birds:
         bird.moveLeft()
 
-    if bazookaCoin is not None:
+    for bazookaCoin in bazookaCoins:
         bazookaCoin.moveLeft()
 
-    if explosion is not None:
+    for explosion in explosions:
         explosion.moveLeft()
 
 
