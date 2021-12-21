@@ -31,6 +31,10 @@ birds = []
 bazookaCoins = []
 explosions = []
 
+# after how many loops a cactus, a bird or a bazookaCoin can be created
+game_obj_spawn_frequency = 60
+game_obj_spawn_counter = 0
+
 quit_game = False
 
 
@@ -50,8 +54,6 @@ def handle_pressed_keys(pressed_keys):
 
 
 def draw_moving_objects():
-    # draw dino
-    gameDisplay.blit(dino.get_image(), (dino.get_x(), dino.get_y()))
     # draw bullets
     for bullet in dino.get_bullets():
         gameDisplay.blit(bullet.get_image(), (bullet.get_x(), bullet.get_y()))
@@ -67,11 +69,24 @@ def draw_moving_objects():
     # draw explosion
     for explosion in explosions:
         gameDisplay.blit(explosion.get_image(), (explosion.get_x(), explosion.get_y()))
+    # draw dino
+    gameDisplay.blit(dino.get_image(), (dino.get_x(), dino.get_y()))
 
 
-def create_obstacles():
-    rnd_number = random.randint(0, 100)
-    # todo create obstacles
+#  create randomly bazookaCoin, bird, cactus or none
+def create_rnd_left_moving_object():
+    rnd_number = random.randint(0, 50)
+
+    if rnd_number == 0:
+        #  only one bazookaCoin should exist at the same time
+        if len(bazookaCoins) == 0:
+            bazookaCoins.append(BazookaCoin(DISPLAY_WIDTH, ground_y - random.randint(100, 150)))
+    elif rnd_number % 4 == 0:
+        #  only one bird should exist at the same time
+        if len(birds) == 0:
+            birds.append(Bird(DISPLAY_WIDTH, ground_y - random.randint(10, 120)))
+    elif rnd_number % 2 == 0:
+        cacti.append(Cactus(DISPLAY_WIDTH, ground_y))
 
 
 def perform_object_movements():
@@ -98,6 +113,10 @@ while not quit_game:
     handle_pressed_keys(pygame.key.get_pressed())
 
     perform_object_movements()
+
+    game_obj_spawn_counter += 1
+    if game_obj_spawn_counter % game_obj_spawn_frequency == 0:
+        create_rnd_left_moving_object()
 
     gameDisplay.fill(WHITE)
     draw_moving_objects()
