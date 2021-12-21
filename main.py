@@ -35,9 +35,11 @@ quit_game = False
 def handle_pressed_keys(pressed_keys):
     if pressed_keys[pygame.K_SPACE] or pressed_keys[pygame.K_UP]:
         dino.activate_jumping()
-
-    if pressed_keys[pygame.K_DOWN]:
-        dino.set_stooping(True)
+    elif pressed_keys[pygame.K_DOWN]:
+        if dino.is_jumping():
+            dino.jump_down_faster()
+        else:
+            dino.set_stooping(True)
     else:
         dino.set_stooping(False)
 

@@ -67,8 +67,10 @@ class Dino:
                 self.__current_image = pygame.image.load(Dino.__running_sprite_paths[self.__current_image_index])
         else:
             if self.__jump_counter <= Dino.__jump_height:
+                # jump up
                 if self.__jump_counter < 0:
                     self.__y -= self.__jump_counter ** 2
+                # jump down
                 else:
                     self.__y += self.__jump_counter ** 2
 
@@ -87,6 +89,21 @@ class Dino:
         for bullet in self.__bullets:
             bullet.move_right()
 
+    # this method is for getting down the dino faster when the dino is jumping
+    def jump_down_faster(self):
+        if not self.__jumping \
+                or self.__jump_counter > Dino.__jump_height or self.__jump_counter <= Dino.__jump_height * -1:
+            return
+
+        # if dino is moving up
+        if self.__jump_counter < 0:
+            # make him moving down to the ground
+            self.__jump_counter = (self.__jump_counter - 1) * -1  # decrement jump_counter and make it positive
+
+        self.__y += self.__jump_counter ** 2
+
+        self.__jump_counter += 1
+
     def set_stooping(self, stooping):
         self.__stooping = stooping
 
@@ -96,7 +113,7 @@ class Dino:
         self.__bullet_loaded = True
 
     def activate_jumping(self):
-        if not self.__has_bazooka:
+        if not self.__has_bazooka and not self.__jumping:
             self.__jumping = True
             self.__current_image = pygame.image.load(Dino.__jumping_sprite_path)
 
@@ -148,3 +165,6 @@ class Dino:
 
     def get_bullets(self):
         return self.__bullets
+
+    def is_jumping(self):
+        return self.__jumping
