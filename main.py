@@ -22,7 +22,7 @@ FPS = 60
 clock = pygame.time.Clock()
 
 # game constants
-ground_y = DISPLAY_HEIGHT - 100
+ground_y = DISPLAY_HEIGHT
 
 # game objects
 dino = Dino(10, ground_y)
@@ -80,11 +80,11 @@ def create_rnd_left_moving_object():
     if rnd_number == 0:
         #  only one bazookaCoin should exist at the same time
         if len(bazookaCoins) == 0:
-            bazookaCoins.append(BazookaCoin(DISPLAY_WIDTH, ground_y - random.randint(100, 150)))
-    elif rnd_number % 4 == 0:
-        #  only one bird should exist at the same time
-        if len(birds) == 0:
-            birds.append(Bird(DISPLAY_WIDTH, ground_y - random.randint(10, 120)))
+            bazookaCoins.append(BazookaCoin(DISPLAY_WIDTH, ground_y - random.randint(200, 250)))
+    elif rnd_number % 5 == 0:
+        #  only two birds should exist at the same time
+        if len(birds) <= 1:
+            birds.append(Bird(DISPLAY_WIDTH, ground_y - random.randint(110, 220)))
     elif rnd_number % 2 == 0:
         cacti.append(Cactus(DISPLAY_WIDTH, ground_y))
 

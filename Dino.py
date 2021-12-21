@@ -23,11 +23,12 @@ class Dino:
     # how often move() has to be called after the next bullet can be shot
     __bullet_loading_speed = 10
 
-    def __init__(self, x, y):
-        self.__x = x
-        self.__y = y
-
+    #  ground_y is the coordinate of the ground the dino is moving on
+    def __init__(self, x, ground_y):
         self.__current_image = pygame.image.load(Dino.__running_sprite_paths[0])
+
+        self.__x = x
+        self.__y = ground_y - self.__current_image.get_height()
 
         self.__has_bazooka = False
         self.__stooping = False
