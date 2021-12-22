@@ -37,8 +37,8 @@ class Bird(LeftMovingObject):
                               self._image.get_width() * 0.3, self._image.get_height() * 0.3)
         if self.__current_image_index == 0:
             return [head_collision_box,
-                    (self._x + self._image.get_width() * 0.35, self._y + self._image.get_height() * 0.4,
-                     self._image.get_width() * 0.6, self._image.get_height() * 0.55)]
+                    (self._x + self._image.get_width() * 0.4, self._y + self._image.get_height() * 0.4,
+                     self._image.get_width() * 0.55, self._image.get_height() * 0.55)]
         else:
             return [head_collision_box,
                     (self._x + self._image.get_width() * 0.35, self._y + self._image.get_height() * 0.1,
