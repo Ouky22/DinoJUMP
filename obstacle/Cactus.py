@@ -19,4 +19,5 @@ class Cactus(LeftMovingObject):
         self._x -= self._speed
 
     def get_collision_boxes(self):
-        return [(self._x, self._y, self._image.get_width(), self._image.get_height())]
+        return [(self._x + self._image.get_width() * 0.1, self._y,
+                 self._image.get_width() * 0.9, self._image.get_height())]
