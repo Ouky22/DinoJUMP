@@ -139,13 +139,6 @@ class Dino:
                 (self.__x + self.__current_image.get_width() * 0.25, self.__y + self.get_image().get_height() * 0.7,
                  self.__current_image.get_width() * 0.3, self.__current_image.get_height() * 0.25)]
 
-    def get_bullets_collision_boxes(self):
-        collision_boxes = []
-        for bullet in self.__bullets:
-            collision_boxes.append((bullet.get_x(), bullet.get_y(), bullet.get_image().get_width(),
-                                    bullet.get_image().get_height()))
-        return collision_boxes
-
     def shoot_bullet(self):
         if self.__has_bazooka and self.__bullet_amount > 0 and self.__bullet_loaded:
             self.__bullets.append(Bullet(self.__x + self.__current_image.get_width(),
