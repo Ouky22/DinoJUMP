@@ -155,6 +155,12 @@ def remove_finished_explosions():
             explosions.remove(explosion)
 
 
+def remove_finished_explosions():
+    for explosion in explosions:
+        if explosion.isExplosionOver():
+            explosions.remove(explosion)
+
+
 #  for testing
 def draw_collision_boxes():
     for collision_box in dino.get_collision_boxes():
