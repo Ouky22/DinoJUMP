@@ -149,6 +149,12 @@ def handle_collision():
                     dino.remove_bullet(bullet)
 
 
+def remove_finished_explosions():
+    for explosion in explosions:
+        if explosion.isExplosionOver():
+            explosions.remove(explosion)
+
+
 #  for testing
 def draw_collision_boxes():
     for collision_box in dino.get_collision_boxes():
@@ -178,9 +184,10 @@ while not quit_game:
 
     handle_collision()
 
+    remove_finished_explosions()
+
     game_display.fill(WHITE)
     draw_moving_objects()
-
     pygame.display.update()
     clock.tick(FPS)
 
