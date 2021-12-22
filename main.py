@@ -37,6 +37,8 @@ game_obj_spawn_counter = 0
 
 quit_game = False
 
+game_over = False
+
 
 def handle_pressed_keys(pressed_keys):
     if pressed_keys[pygame.K_SPACE] or pressed_keys[pygame.K_UP]:
@@ -105,6 +107,29 @@ def perform_object_movements():
         explosion.moveLeft()
 
 
+def does_collide(collision_boxes_1, collision_boxes_2):
+    for collision_box_1 in collision_boxes_1:
+        for collision_box_2 in collision_boxes_2:
+            if pygame.Rect(collision_box_1).colliderect(pygame.Rect(collision_box_2)):
+                return True
+
+
+def handle_collision():
+    global game_over
+
+    #  check if dino collides with cactus
+    for cactus in cacti:
+        if does_collide(cactus.get_collision_boxes(), dino.get_collision_boxes()):
+            game_over = True
+            break
+
+    #  check if dino collides with bird
+    for bird in birds:
+        if does_collide(bird.get_collision_boxes(), dino.get_collision_boxes()):
+            game_over = True
+            break
+
+
 while not quit_game:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -118,9 +143,19 @@ while not quit_game:
     if game_obj_spawn_counter % game_obj_spawn_frequency == 0:
         create_rnd_left_moving_object()
 
+    handle_collision()
+
+    #  for testing
+    if game_over:
+        quit_game = True
+
     gameDisplay.fill(WHITE)
     draw_moving_objects()
     pygame.display.update()
     clock.tick(FPS)
+
+#  for testing
+while True:
+    pass
 
 pygame.quit()
