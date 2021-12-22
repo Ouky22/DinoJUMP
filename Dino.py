@@ -120,8 +120,8 @@ class Dino:
 
     def get_collision_boxes(self):
         if self.__stooping:
-            return [(self.__x * 0.9, self.__y + self.get_image().get_height() * 0.4,
-                     self.__current_image.get_width(), self.__current_image.get_height() * 0.6)]
+            return [(self.__x * 0.5, self.__y + self.get_image().get_height() * 0.42,
+                     self.__current_image.get_width(), self.__current_image.get_height() * 0.5)]
         elif self.__has_bazooka:
             return [
                 (self.__x + self.__current_image.get_width() * 0.4, self.__y + self.__current_image.get_height() * 0.05,
@@ -131,12 +131,13 @@ class Dino:
                 (self.__x + self.__current_image.get_width() * 0.25, self.__y + self.get_image().get_height() * 0.7,
                  self.__current_image.get_width() * 0.3, self.__current_image.get_height() * 0.25)]
         else:
-            return [(self.__x + self.__current_image.get_width() * 0.5, self.__y,
-                     self.__current_image.get_width() * 0.45, self.__current_image.get_height() * 0.4),
-                    (self.__x + self.__current_image.get_width() * 0.05, self.__y + self.get_image().get_height() * 0.4,
-                     self.__current_image.get_width() * 0.65, self.__current_image.get_height() * 0.3),
-                    (self.__x + self.__current_image.get_width() * 0.25, self.__y + self.get_image().get_height() * 0.7,
-                     self.__current_image.get_width() * 0.3, self.__current_image.get_height() * 0.25)]
+            return [
+                (self.__x + self.__current_image.get_width() * 0.5, self.__y + self.__current_image.get_height() * 0.05,
+                 self.__current_image.get_width() * 0.45, self.__current_image.get_height() * 0.4),
+                (self.__x + self.__current_image.get_width() * 0.05, self.__y + self.get_image().get_height() * 0.4,
+                 self.__current_image.get_width() * 0.65, self.__current_image.get_height() * 0.3),
+                (self.__x + self.__current_image.get_width() * 0.25, self.__y + self.get_image().get_height() * 0.7,
+                 self.__current_image.get_width() * 0.3, self.__current_image.get_height() * 0.25)]
 
     def get_bullets_collision_boxes(self):
         collision_boxes = []
