@@ -12,9 +12,9 @@ class Explosion(LeftMovingObject):
     # the next explosion image is loaded
     __explosion_speed = 2
 
-    def __init__(self, x, y):
+    def __init__(self, x, ground_y):
         image = pygame.image.load(Explosion.__explosion_image_paths[0])
-        super().__init__(x, y, image)
+        super().__init__(x, ground_y - image.get_height(), image)
 
         self.__running_counter = 0
         self.__current_image_index = 0

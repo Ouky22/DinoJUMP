@@ -149,6 +149,9 @@ class Dino:
         if self.__bullet_amount <= 0:
             self.__has_bazooka = False
 
+    def remove_bullet(self, bullet):
+        self.__bullets.remove(bullet)
+
     def get_x(self):
         return self.__x
 

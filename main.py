@@ -14,7 +14,7 @@ pygame.init()
 pygame.display.set_caption("Dino Jump")
 DISPLAY_WIDTH = 1000
 DISPLAY_HEIGHT = 500
-gameDisplay = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
+game_display = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
 WHITE = (255, 255, 255)
 
 # time
@@ -56,23 +56,23 @@ def handle_pressed_keys(pressed_keys):
 
 
 def draw_moving_objects():
+    # draw dino
+    game_display.blit(dino.get_image(), (dino.get_x(), dino.get_y()))
     # draw bullets
     for bullet in dino.get_bullets():
-        gameDisplay.blit(bullet.get_image(), (bullet.get_x(), bullet.get_y()))
+        game_display.blit(bullet.get_image(), (bullet.get_x(), bullet.get_y()))
     # draw cacti
     for cactus in cacti:
-        gameDisplay.blit(cactus.get_image(), (cactus.get_x(), cactus.get_y()))
+        game_display.blit(cactus.get_image(), (cactus.get_x(), cactus.get_y()))
     # draw Bird
     for bird in birds:
-        gameDisplay.blit(bird.get_image(), (bird.get_x(), bird.get_y()))
+        game_display.blit(bird.get_image(), (bird.get_x(), bird.get_y()))
     # draw bazookaCoin:
     for bazookaCoin in bazookaCoins:
-        gameDisplay.blit(bazookaCoin.get_image(), (bazookaCoin.get_x(), bazookaCoin.get_y()))
+        game_display.blit(bazookaCoin.get_image(), (bazookaCoin.get_x(), bazookaCoin.get_y()))
     # draw explosion
     for explosion in explosions:
-        gameDisplay.blit(explosion.get_image(), (explosion.get_x(), explosion.get_y()))
-    # draw dino
-    gameDisplay.blit(dino.get_image(), (dino.get_x(), dino.get_y()))
+        game_display.blit(explosion.get_image(), (explosion.get_x(), explosion.get_y()))
 
 
 #  create randomly bazookaCoin, bird, cactus or none
@@ -129,6 +129,39 @@ def handle_collision():
             game_over = True
             break
 
+    #  check if dino collides with bazookaCoin
+    for bazookaCoin in bazookaCoins:
+        if does_collide(bazookaCoin.get_collision_boxes(), dino.get_collision_boxes()):
+            dino.activate_bazooka()
+            bazookaCoins.remove(bazookaCoin)
+
+        #  check if bullets collide with obstacle
+        for bullet in dino.get_bullets():
+            for cactus in cacti:
+                if does_collide(bullet.get_collision_boxes(), cactus.get_collision_boxes()):
+                    explosions.append(Explosion(cactus.get_x(), ground_y))
+                    cacti.remove(cactus)
+                    dino.remove_bullet(bullet)
+            for bird in birds:
+                if does_collide(bullet.get_collision_boxes(), bird.get_collision_boxes()):
+                    explosions.append(Explosion(bird.get_x(), bird.get_y() + bird.get_image().get_height()))
+                    birds.remove(bird)
+                    dino.remove_bullet(bullet)
+
+
+#  for testing
+def draw_collision_boxes():
+    for collision_box in dino.get_collision_boxes():
+        pygame.draw.rect(game_display, (255, 0, 0), collision_box, 1)
+
+    for cactus in cacti:
+        for collision_box in cactus.get_collision_boxes():
+            pygame.draw.rect(game_display, (255, 0, 0), collision_box, 1)
+
+    for bird in birds:
+        for collision_box in bird.get_collision_boxes():
+            pygame.draw.rect(game_display, (255, 0, 0), collision_box, 1)
+
 
 while not quit_game:
     for event in pygame.event.get():
@@ -145,17 +178,10 @@ while not quit_game:
 
     handle_collision()
 
-    #  for testing
-    if game_over:
-        quit_game = True
-
-    gameDisplay.fill(WHITE)
+    game_display.fill(WHITE)
     draw_moving_objects()
+
     pygame.display.update()
     clock.tick(FPS)
-
-#  for testing
-while True:
-    pass
 
 pygame.quit()
