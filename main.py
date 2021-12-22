@@ -135,18 +135,24 @@ def handle_collision():
             dino.activate_bazooka()
             bazookaCoins.remove(bazookaCoin)
 
-        #  check if bullets collide with obstacle
-        for bullet in dino.get_bullets():
-            for cactus in cacti:
-                if does_collide(bullet.get_collision_boxes(), cactus.get_collision_boxes()):
-                    explosions.append(Explosion(cactus.get_x(), ground_y))
-                    cacti.remove(cactus)
-                    dino.remove_bullet(bullet)
-            for bird in birds:
-                if does_collide(bullet.get_collision_boxes(), bird.get_collision_boxes()):
-                    explosions.append(Explosion(bird.get_x(), bird.get_y() + bird.get_image().get_height()))
-                    birds.remove(bird)
-                    dino.remove_bullet(bullet)
+    #  check if bullets collide with obstacle
+    for bullet in dino.get_bullets():
+        for cactus in cacti:
+            if does_collide(bullet.get_collision_boxes(), cactus.get_collision_boxes()):
+                explosions.append(Explosion(cactus.get_x(), ground_y))
+                cacti.remove(cactus)
+                dino.remove_bullet(bullet)
+        for bird in birds:
+            if does_collide(bullet.get_collision_boxes(), bird.get_collision_boxes()):
+                explosions.append(Explosion(bird.get_x(), bird.get_y() + bird.get_image().get_height()))
+                birds.remove(bird)
+                dino.remove_bullet(bullet)
+
+
+def remove_finished_explosions():
+    for explosion in explosions:
+        if explosion.isExplosionOver():
+            explosions.remove(explosion)
 
 
 #  for testing
@@ -178,9 +184,10 @@ while not quit_game:
 
     handle_collision()
 
+    remove_finished_explosions()
+
     game_display.fill(WHITE)
     draw_moving_objects()
-
     pygame.display.update()
     clock.tick(FPS)
 
