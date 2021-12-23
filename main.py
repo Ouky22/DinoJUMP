@@ -15,7 +15,7 @@ pygame.display.set_caption("Dino Jump")
 DISPLAY_WIDTH = 1000
 DISPLAY_HEIGHT = 500
 game_display = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
-SCORE_FONT = pygame.font.SysFont('impact', 50)
+SCORE_FONT = pygame.font.SysFont('impact', 40)
 
 # Colors
 WHITE = (255, 255, 255)
@@ -42,7 +42,8 @@ game_obj_spawn_counter = 0
 quit_game = False
 game_over = True
 
-score = 0
+current_score = 0
+high_score = 0
 score_counter = 0
 
 
@@ -71,7 +72,7 @@ def handle_pressed_keys(pressed_keys):
 
 
 def start_game():
-    global dino, cacti, birds, bazookaCoins, explosions, game_over
+    global dino, cacti, birds, bazookaCoins, explosions, game_over, current_score
     # reset game objects for new game
     dino = Dino(10, ground_y)
     cacti = []
@@ -80,6 +81,7 @@ def start_game():
     explosions = []
 
     game_over = False
+    current_score = 0
 
 
 def draw_moving_objects():
@@ -103,10 +105,14 @@ def draw_moving_objects():
 
 
 def draw_score_text():
-    global score
+    global current_score, high_score
 
-    score_text = SCORE_FONT.render(str(score), True, SCORE_COLOR)
-    game_display.blit(score_text, (DISPLAY_WIDTH - score_text.get_width() - 20, 10))
+    # draw current score
+    current_score_text = SCORE_FONT.render(str(current_score).zfill(5), True, SCORE_COLOR)
+    game_display.blit(current_score_text, (DISPLAY_WIDTH - current_score_text.get_width() - 20, 10))
+    # draw high score
+    high_score_text = SCORE_FONT.render("HI " + str(high_score).zfill(5), True, SCORE_COLOR)
+    game_display.blit(high_score_text, (20, 10))
 
 
 #  create randomly bazookaCoin, bird, cactus or none
@@ -210,8 +216,10 @@ while not quit_game:
 
         # handle score
         score_counter += 1
-        if score_counter % 5 == 0:
-            score += 1
+        if score_counter % 10 == 0:
+            current_score += 1
+            if current_score > high_score:
+                high_score = current_score
 
         # drawing
         game_display.fill(WHITE)
