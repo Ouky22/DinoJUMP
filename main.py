@@ -176,20 +176,6 @@ def remove_finished_explosions():
             explosions.remove(explosion)
 
 
-#  for testing
-def draw_collision_boxes():
-    for collision_box in dino.get_collision_boxes():
-        pygame.draw.rect(game_display, (255, 0, 0), collision_box, 1)
-
-    for cactus in cacti:
-        for collision_box in cactus.get_collision_boxes():
-            pygame.draw.rect(game_display, (255, 0, 0), collision_box, 1)
-
-    for bird in birds:
-        for collision_box in bird.get_collision_boxes():
-            pygame.draw.rect(game_display, (255, 0, 0), collision_box, 1)
-
-
 while not quit_game:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -212,5 +198,8 @@ while not quit_game:
         draw_moving_objects()
         pygame.display.update()
         clock.tick(FPS)
+
+        if game_over:
+            pygame.time.wait(1500)
 
 pygame.quit()
