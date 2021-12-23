@@ -37,27 +37,43 @@ game_obj_spawn_counter = 0
 
 quit_game = False
 
-game_over = False
+game_over = True
 
 
 def handle_pressed_keys(pressed_keys):
     global quit_game
 
-    if pressed_keys[pygame.K_SPACE] or pressed_keys[pygame.K_UP]:
-        dino.activate_jumping()
-    elif pressed_keys[pygame.K_DOWN]:
-        if dino.is_jumping():
-            dino.jump_down_faster()
-        else:
-            dino.set_stooping(True)
-    else:
-        dino.set_stooping(False)
-
-    if pressed_keys[pygame.K_s] or pressed_keys[pygame.K_RIGHT]:
-        dino.shoot_bullet()
-
     if pressed_keys[pygame.K_ESCAPE] or pressed_keys[pygame.K_q]:
         quit_game = True
+
+    if not game_over:
+        if pressed_keys[pygame.K_SPACE] or pressed_keys[pygame.K_UP]:
+            dino.activate_jumping()
+        elif pressed_keys[pygame.K_DOWN]:
+            if dino.is_jumping():
+                dino.jump_down_faster()
+            else:
+                dino.set_stooping(True)
+        else:
+            dino.set_stooping(False)
+
+        if pressed_keys[pygame.K_s] or pressed_keys[pygame.K_RIGHT]:
+            dino.shoot_bullet()
+    else:
+        if pressed_keys[pygame.K_SPACE]:
+            start_game()
+
+
+def start_game():
+    global dino, cacti, birds, bazookaCoins, explosions, game_over
+    # reset game objects for new game
+    dino = Dino(10, ground_y)
+    cacti = []
+    birds = []
+    bazookaCoins = []
+    explosions = []
+
+    game_over = False
 
 
 def draw_moving_objects():
@@ -181,19 +197,20 @@ while not quit_game:
 
     handle_pressed_keys(pygame.key.get_pressed())
 
-    perform_object_movements()
+    if not game_over:
+        perform_object_movements()
 
-    game_obj_spawn_counter += 1
-    if game_obj_spawn_counter % game_obj_spawn_frequency == 0:
-        create_rnd_left_moving_object()
+        game_obj_spawn_counter += 1
+        if game_obj_spawn_counter % game_obj_spawn_frequency == 0:
+            create_rnd_left_moving_object()
 
-    handle_collision()
+        handle_collision()
 
-    remove_finished_explosions()
+        remove_finished_explosions()
 
-    game_display.fill(WHITE)
-    draw_moving_objects()
-    pygame.display.update()
-    clock.tick(FPS)
+        game_display.fill(WHITE)
+        draw_moving_objects()
+        pygame.display.update()
+        clock.tick(FPS)
 
 pygame.quit()
