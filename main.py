@@ -205,6 +205,25 @@ def remove_finished_explosions():
             explosions.remove(explosion)
 
 
+#  removes moving game objects that are outside of the display
+def remove_invisible_objects():
+    for cactus in cacti:
+        if cactus.get_x() < -100:
+            cacti.remove(cactus)
+
+    for bird in birds:
+        if bird.get_x() < -100:
+            birds.remove(bird)
+
+    for bazookaCoin in bazookaCoins:
+        if bazookaCoin.get_x() < -100:
+            bazookaCoins.remove(bazookaCoin)
+
+    for bullet in dino.get_bullets():
+        if bullet.get_x() > DISPLAY_WIDTH:
+            dino.remove_bullet(bullet)
+
+
 # display before starting game
 game_display.fill(WHITE)
 draw_info_text("press spacebar to start game")
@@ -228,6 +247,7 @@ while not quit_game:
         handle_collision()
 
         remove_finished_explosions()
+        remove_invisible_objects()
 
         # handle score
         score_counter += 1
