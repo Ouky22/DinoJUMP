@@ -264,6 +264,9 @@ while not quit_game:
         clock.tick(FPS)
 
         if game_over:
+            draw_info_text("press spacebar to restart the game")
+            pygame.display.update()
             pygame.time.wait(1500)
+
 
 pygame.quit()
