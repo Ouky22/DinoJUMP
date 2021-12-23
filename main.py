@@ -1,3 +1,4 @@
+import os
 import random
 
 import pygame as pygame
@@ -24,6 +25,9 @@ INFO_FONT = pygame.font.SysFont('impact', 20)
 WHITE = (255, 255, 255)
 SCORE_COLOR = (200, 200, 200)
 INFO_COLOR = (100, 100, 100)
+
+# field images
+cloud = pygame.image.load(os.path.join("sprites", "field", "cloud01.png"))
 
 # time
 FPS = 60
@@ -123,6 +127,12 @@ def draw_info_text(info_string):
     info_text = INFO_FONT.render(str(info_string), True, INFO_COLOR)
     center = (DISPLAY_WIDTH / 2 - info_text.get_width() / 2, DISPLAY_HEIGHT / 2)
     game_display.blit(info_text, center)
+
+
+def draw_clouds():
+    game_display.blit(cloud, (DISPLAY_WIDTH / 3 * 2, DISPLAY_HEIGHT / 5))
+    game_display.blit(cloud, (DISPLAY_WIDTH / 3, DISPLAY_HEIGHT / 3))
+    game_display.blit(cloud, (DISPLAY_WIDTH / 6, DISPLAY_HEIGHT / 4))
 
 
 #  create randomly bazookaCoin, bird, cactus or none
@@ -258,6 +268,7 @@ while not quit_game:
 
         # drawing
         game_display.fill(WHITE)
+        draw_clouds()
         draw_moving_objects()
         draw_score_text()
         pygame.display.update()
@@ -267,6 +278,5 @@ while not quit_game:
             draw_info_text("press spacebar to restart the game")
             pygame.display.update()
             pygame.time.wait(1500)
-
 
 pygame.quit()
