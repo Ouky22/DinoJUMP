@@ -14,9 +14,6 @@ class Dino:
     # sprites for jumping dino
     __jumping_sprite_path = os.path.join("sprites", "dino", "dino_jumping", "trex01.png")
     __jumping_bazooka_sprite_path = os.path.join("sprites", "dino", "dino_jumping", "trexBazooka01.png")
-    # sprites for dino when game is over
-    __game_over_sprite_path = os.path.join("sprites", "dino", "dino_game_over", "trex04.png")
-    __game_over_bazooka_sprite_path = os.path.join("sprites", "dino", "dino_game_over", "trexBazooka04.png")
 
     __jump_height = 8
 
