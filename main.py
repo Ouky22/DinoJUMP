@@ -51,7 +51,7 @@ def handle_pressed_keys(pressed_keys):
     else:
         dino.set_stooping(False)
 
-    if pressed_keys[pygame.K_s]:
+    if pressed_keys[pygame.K_s] or pressed_keys[pygame.K_LEFT]:
         dino.shoot_bullet()
 
 
@@ -147,12 +147,6 @@ def handle_collision():
                 explosions.append(Explosion(bird.get_x(), bird.get_y() + bird.get_image().get_height()))
                 birds.remove(bird)
                 dino.remove_bullet(bullet)
-
-
-def remove_finished_explosions():
-    for explosion in explosions:
-        if explosion.isExplosionOver():
-            explosions.remove(explosion)
 
 
 def remove_finished_explosions():
