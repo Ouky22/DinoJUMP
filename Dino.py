@@ -7,12 +7,16 @@ from bazooka.Bullet import Bullet
 
 
 class Dino:
+    # sprites for running dino
     __running_sprite_paths = [f for f in glob.glob(os.path.join("sprites", "dino", "dino_running_normal", "*.png"))]
     __stooping_sprite_paths = [f for f in glob.glob(os.path.join("sprites", "dino", "dino_running_stooping", "*.png"))]
     __bazooka_sprite_paths = [f for f in glob.glob(os.path.join("sprites", "dino", "dino_running_bazooka", "*.png"))]
+    # sprites for jumping dino
     __jumping_sprite_path = os.path.join("sprites", "dino", "dino_running_normal", "trex01.png")
-    __game_over_sprite_path = os.path.join("sprites", "dino", "trex04.png")
-    __game_over_bazooka_sprite_path = os.path.join("sprites", "dino", "trexBazooka04.png")
+    __jumping_bazooka_sprite_path = os.path.join("sprites", "dino", "dino_running_bazooka", "trexBazooka01.png")
+    # sprites for dino when game is over
+    __game_over_sprite_path = os.path.join("sprites", "dino", "dino_game_over", "trex04.png")
+    __game_over_bazooka_sprite_path = os.path.join("sprites", "dino", "dino_game_over", "trexBazooka04.png")
 
     __jump_height = 8
 
