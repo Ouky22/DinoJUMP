@@ -41,6 +41,8 @@ game_over = False
 
 
 def handle_pressed_keys(pressed_keys):
+    global quit_game
+
     if pressed_keys[pygame.K_SPACE] or pressed_keys[pygame.K_UP]:
         dino.activate_jumping()
     elif pressed_keys[pygame.K_DOWN]:
@@ -53,6 +55,9 @@ def handle_pressed_keys(pressed_keys):
 
     if pressed_keys[pygame.K_s] or pressed_keys[pygame.K_RIGHT]:
         dino.shoot_bullet()
+
+    if pressed_keys[pygame.K_ESCAPE] or pressed_keys[pygame.K_q]:
+        quit_game = True
 
 
 def draw_moving_objects():
