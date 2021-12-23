@@ -15,7 +15,11 @@ pygame.display.set_caption("Dino Jump")
 DISPLAY_WIDTH = 1000
 DISPLAY_HEIGHT = 500
 game_display = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
+SCORE_FONT = pygame.font.SysFont('impact', 50)
+
+# Colors
 WHITE = (255, 255, 255)
+SCORE_COLOR = (200, 200, 200)
 
 # time
 FPS = 60
@@ -36,8 +40,10 @@ game_obj_spawn_frequency = 60
 game_obj_spawn_counter = 0
 
 quit_game = False
-
 game_over = True
+
+score = 0
+score_counter = 0
 
 
 def handle_pressed_keys(pressed_keys):
@@ -94,6 +100,13 @@ def draw_moving_objects():
     # draw explosion
     for explosion in explosions:
         game_display.blit(explosion.get_image(), (explosion.get_x(), explosion.get_y()))
+
+
+def draw_score_text():
+    global score
+
+    score_text = SCORE_FONT.render(str(score), True, SCORE_COLOR)
+    game_display.blit(score_text, (DISPLAY_WIDTH - score_text.get_width() - 20, 10))
 
 
 #  create randomly bazookaCoin, bird, cactus or none
@@ -186,6 +199,7 @@ while not quit_game:
     if not game_over:
         perform_object_movements()
 
+        # game object spawning
         game_obj_spawn_counter += 1
         if game_obj_spawn_counter % game_obj_spawn_frequency == 0:
             create_rnd_left_moving_object()
@@ -194,8 +208,15 @@ while not quit_game:
 
         remove_finished_explosions()
 
+        # handle score
+        score_counter += 1
+        if score_counter % 5 == 0:
+            score += 1
+
+        # drawing
         game_display.fill(WHITE)
         draw_moving_objects()
+        draw_score_text()
         pygame.display.update()
         clock.tick(FPS)
 
