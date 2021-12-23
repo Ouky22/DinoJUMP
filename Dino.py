@@ -117,10 +117,16 @@ class Dino:
         self.__bullet_amount = 3
         self.__bullet_loaded = True
 
+        if self.__jumping:
+            self.__current_image = pygame.image.load(Dino.__jumping_bazooka_sprite_path)
+
     def activate_jumping(self):
-        if not self.__has_bazooka and not self.__jumping:
+        if not self.__jumping:
             self.__jumping = True
-            self.__current_image = pygame.image.load(Dino.__jumping_sprite_path)
+            if self.__has_bazooka:
+                self.__current_image = pygame.image.load(Dino.__jumping_bazooka_sprite_path)
+            else:
+                self.__current_image = pygame.image.load(Dino.__jumping_sprite_path)
 
     def get_collision_boxes(self):
         if self.__stooping:
@@ -152,6 +158,8 @@ class Dino:
 
         if self.__bullet_amount <= 0:
             self.__has_bazooka = False
+            if self.__jumping:
+                self.__current_image = pygame.image.load(Dino.__jumping_sprite_path)
 
     def remove_bullet(self, bullet):
         self.__bullets.remove(bullet)
