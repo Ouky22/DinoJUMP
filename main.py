@@ -51,7 +51,7 @@ def handle_pressed_keys(pressed_keys):
     else:
         dino.set_stooping(False)
 
-    if pressed_keys[pygame.K_s] or pressed_keys[pygame.K_LEFT]:
+    if pressed_keys[pygame.K_s] or pressed_keys[pygame.K_RIGHT]:
         dino.shoot_bullet()
 
 
