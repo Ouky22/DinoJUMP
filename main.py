@@ -15,11 +15,15 @@ pygame.display.set_caption("Dino Jump")
 DISPLAY_WIDTH = 1000
 DISPLAY_HEIGHT = 500
 game_display = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
-SCORE_FONT = pygame.font.SysFont('impact', 40)
 
-# Colors
+# fonts
+SCORE_FONT = pygame.font.SysFont('impact', 40)
+INFO_FONT = pygame.font.SysFont('impact', 20)
+
+# colors
 WHITE = (255, 255, 255)
 SCORE_COLOR = (200, 200, 200)
+INFO_COLOR = (100, 100, 100)
 
 # time
 FPS = 60
@@ -115,6 +119,12 @@ def draw_score_text():
     game_display.blit(high_score_text, (20, 10))
 
 
+def draw_info_text(info_string):
+    info_text = INFO_FONT.render(str(info_string), True, INFO_COLOR)
+    center = (DISPLAY_WIDTH / 2 - info_text.get_width() / 2, DISPLAY_HEIGHT / 2)
+    game_display.blit(info_text, center)
+
+
 #  create randomly bazookaCoin, bird, cactus or none
 def create_rnd_left_moving_object():
     rnd_number = random.randint(0, 50)
@@ -194,6 +204,11 @@ def remove_finished_explosions():
         if explosion.isExplosionOver():
             explosions.remove(explosion)
 
+
+# display before starting game
+game_display.fill(WHITE)
+draw_info_text("press spacebar to start game")
+pygame.display.update()
 
 while not quit_game:
     for event in pygame.event.get():
