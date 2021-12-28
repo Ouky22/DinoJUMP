@@ -17,6 +17,7 @@ class GroundGenerator:
 
     def move_grounds(self):
         self.__fill_ground_pieces()
+        self.__remove_ground_pieces()
 
         for ground_piece in self.__ground_pieces:
             ground_piece.moveLeft()
@@ -35,6 +36,14 @@ class GroundGenerator:
 
             last_ground_piece = self.__ground_pieces[-1]
             last_ground_piece_right_x = last_ground_piece.get_x() + last_ground_piece.get_image().get_width()
+
+    # remove ground_pieces that are not visible
+    def __remove_ground_pieces(self):
+        # ground_pieces that exceeded left side of display with there right edge are not visible
+        for ground_piece in self.__ground_pieces:
+            ground_piece_right_x = ground_piece.get_x() + ground_piece.get_image().get_width()
+            if ground_piece_right_x < 0:
+                self.__ground_pieces.remove(ground_piece)
 
     def get_images(self):
         return self.__ground_pieces
