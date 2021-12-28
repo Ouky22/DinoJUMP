@@ -12,7 +12,8 @@ class Cactus(LeftMovingObject):
 
     #  ground_y is the coordinate of the ground the cactus is moving on
     def __init__(self, x, ground_y):
-        image = pygame.image.load(Cactus.__cactus_image_paths[random.randint(0, len(Cactus.__cactus_image_paths) - 1)])
+        image = pygame.image.load(
+            Cactus.__cactus_image_paths[random.randint(0, len(Cactus.__cactus_image_paths) - 1)]).convert_alpha()
         super().__init__(x, ground_y - image.get_height(), image)
 
     def moveLeft(self):

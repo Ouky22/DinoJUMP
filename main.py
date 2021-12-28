@@ -28,7 +28,7 @@ SCORE_COLOR = (200, 200, 200)
 INFO_COLOR = (100, 100, 100)
 
 # field images
-cloud = pygame.image.load(os.path.join("sprites", "field", "cloud01.png"))
+cloud = pygame.image.load(os.path.join("sprites", "field", "cloud01.png")).convert_alpha()
 
 # time
 FPS = 60

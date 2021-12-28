@@ -14,7 +14,7 @@ class Bird(LeftMovingObject):
     __wing_movement_speed = 15
 
     def __init__(self, x, y):
-        image = pygame.image.load(Bird.__bird_image_paths[0])
+        image = pygame.image.load(Bird.__bird_image_paths[0]).convert_alpha()
         super().__init__(x, y, image)
 
         # for switching between 2 images of bird for wing movement
@@ -27,7 +27,7 @@ class Bird(LeftMovingObject):
             self.__current_image_index += 1
             if self.__current_image_index >= len(Bird.__bird_image_paths):
                 self.__current_image_index = 0
-            self._image = pygame.image.load(Bird.__bird_image_paths[self.__current_image_index])
+            self._image = pygame.image.load(Bird.__bird_image_paths[self.__current_image_index]).convert_alpha()
             self.__running_counter = 0
 
         self._x -= self._speed

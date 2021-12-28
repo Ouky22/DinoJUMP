@@ -13,7 +13,7 @@ class Explosion(LeftMovingObject):
     __explosion_speed = 2
 
     def __init__(self, x, ground_y):
-        image = pygame.image.load(Explosion.__explosion_image_paths[0])
+        image = pygame.image.load(Explosion.__explosion_image_paths[0]).convert_alpha()
         super().__init__(x, ground_y - image.get_height(), image)
 
         self.__running_counter = 0
@@ -24,7 +24,8 @@ class Explosion(LeftMovingObject):
         if self.__running_counter % Explosion.__explosion_speed == 0:
             self.__current_image_index += 1
             if self.__current_image_index < len(Explosion.__explosion_image_paths):
-                self._image = pygame.image.load(Explosion.__explosion_image_paths[self.__current_image_index])
+                self._image = pygame.image.load(
+                    Explosion.__explosion_image_paths[self.__current_image_index]).convert_alpha()
                 self._x -= self._speed
             else:
                 self.__explosion_over = True

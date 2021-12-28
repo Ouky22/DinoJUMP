@@ -10,7 +10,7 @@ class Bullet:
     def __init__(self, x, y):
         self.__x = x
         self.__y = y
-        self.__image = pygame.image.load(Bullet.__bullet_image_path)
+        self.__image = pygame.image.load(Bullet.__bullet_image_path).convert_alpha()
 
     def move_right(self):
         self.__x += self.__speed

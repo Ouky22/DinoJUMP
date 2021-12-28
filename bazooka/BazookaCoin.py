@@ -9,7 +9,7 @@ class BazookaCoin(LeftMovingObject):
     __bazooka_image_path = os.path.join("sprites", "bazooka", "bazookaCoin.png")
 
     def __init__(self, x, y):
-        image = pygame.image.load(BazookaCoin.__bazooka_image_path)
+        image = pygame.image.load(BazookaCoin.__bazooka_image_path).convert_alpha()
         image = pygame.transform.scale(image, (50, 40))
         super().__init__(x, y, image)
 
