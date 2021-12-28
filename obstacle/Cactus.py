@@ -4,7 +4,7 @@ import random
 
 import pygame.image
 
-from obstacle.LeftMovingObject import LeftMovingObject
+from LeftMovingObject import LeftMovingObject
 
 
 class Cactus(LeftMovingObject):

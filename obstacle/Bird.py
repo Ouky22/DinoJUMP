@@ -3,7 +3,7 @@ import os
 
 import pygame
 
-from obstacle.LeftMovingObject import LeftMovingObject
+from LeftMovingObject import LeftMovingObject
 
 
 class Bird(LeftMovingObject):
