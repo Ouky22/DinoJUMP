@@ -15,7 +15,7 @@ class GroundGenerator:
         self.__y = ground_y
         self.__ground_pieces = [GroundPiece(0, self.__y, GroundGenerator.__sprite_paths[0])]
 
-    def move_grounds(self):
+    def move_ground(self):
         self.__fill_ground_pieces()
         self.__remove_ground_pieces()
 

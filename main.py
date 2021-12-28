@@ -4,6 +4,7 @@ import random
 import pygame as pygame
 
 from Dino import Dino
+from Ground.GroundGenerator import GroundGenerator
 from bazooka.BazookaCoin import BazookaCoin
 from obstacle.Bird import Bird
 from obstacle.Cactus import Cactus
@@ -42,6 +43,7 @@ cacti = []
 birds = []
 bazookaCoins = []
 explosions = []
+ground_generator = GroundGenerator(DISPLAY_WIDTH, ground_y)
 
 # after how many loops a cactus, a bird or a bazookaCoin can be created
 game_obj_spawn_frequency = 60
@@ -80,19 +82,23 @@ def handle_pressed_keys(pressed_keys):
 
 
 def start_game():
-    global dino, cacti, birds, bazookaCoins, explosions, game_over, current_score
+    global dino, cacti, birds, bazookaCoins, explosions, game_over, current_score, ground_generator
     # reset game objects for new game
     dino = Dino(10, ground_y)
     cacti = []
     birds = []
     bazookaCoins = []
     explosions = []
+    ground_generator = GroundGenerator(DISPLAY_WIDTH, ground_y)
 
     game_over = False
     current_score = 0
 
 
 def draw_moving_objects():
+    # draw ground
+    for ground_piece in ground_generator.get_images():
+        game_display.blit(ground_piece.get_image(), (ground_piece.get_x(), ground_piece.get_y()))
     # draw dino
     game_display.blit(dino.get_image(), (dino.get_x(), dino.get_y()))
     # draw bullets
@@ -165,6 +171,8 @@ def perform_object_movements():
 
     for explosion in explosions:
         explosion.moveLeft()
+
+    ground_generator.move_ground()
 
 
 def does_collide(collision_boxes_1, collision_boxes_2):
