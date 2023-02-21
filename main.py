@@ -4,7 +4,7 @@ import random
 import pygame as pygame
 
 from Dino import Dino
-from Ground.GroundGenerator import GroundGenerator
+from ground.GroundGenerator import GroundGenerator
 from bazooka.BazookaCoin import BazookaCoin
 from obstacle.Bird import Bird
 from obstacle.Cactus import Cactus

@@ -2,7 +2,7 @@ import glob
 import os
 import random
 
-from Ground.GroundPiece import GroundPiece
+from ground.GroundPiece import GroundPiece
 
 
 # The ground which the dino and obstacles are moving on is made out of several ground images (ground_pieces).
